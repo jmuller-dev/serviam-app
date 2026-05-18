@@ -1,0 +1,3 @@
+Idea 1: Base de datos de los chicos
+Idea 2: Sistema de puntos para campamentos.
+Idea 3: Base de datos con material de la agrupación.
