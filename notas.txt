@@ -1,0 +1,2 @@
+Primer archivo del proyecto
+Este proyecto es una app para las agrupaciones Halcones de la Cruz del Sur y Santa Juana de Arco
