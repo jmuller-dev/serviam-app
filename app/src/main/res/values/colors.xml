@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="negro">#212121</color>
+    <color name="gris">#929292</color>
+    <color name="color_halcones">#27186E</color>
+    <color name="color_halcones_oscuro">#1E1158</color>
+    <color name="color_halcones_claro">#303F7E</color>
+    <color name="color_halcones_mas_claro">#C7CDE5</color>
+    <color name="color_juanas">#8A0000</color>
+    <color name="color_juanas_oscuro">#6B0000</color>
+    <color name="color_juanas_claro">#A93333</color>
+    <color name="color_juanas_mas_claro">#FFE4E4</color>
+    <color name="fondo_halcones">#DFE2EE</color>
+    <color name="verde_punto">#1a7a2e</color>
+    <color name="rojo_punto">#B71C1C</color>
 </resources>

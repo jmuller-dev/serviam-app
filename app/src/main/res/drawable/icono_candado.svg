@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1080 1090" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="Candado" transform="matrix(5.390782,0,0,5.390782,-620.155729,-614.343819)">
+        <g transform="matrix(1.041328,0,0,1.087528,96.547587,-132.232948)">
+            <path d="M170.016,325.936L170.016,370.895C170.016,383.301 159.496,393.374 146.539,393.374L81.369,393.374C68.412,393.374 57.892,383.301 57.892,370.895L57.892,325.936C57.892,313.53 68.412,303.457 81.369,303.457L146.539,303.457C159.496,303.457 170.016,313.53 170.016,325.936Z" style="fill:rgb(235,235,235);fill-opacity:0;stroke:rgb(146,146,146);stroke-width:13.5px;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,102.642058,-100.314837)">
+            <path d="M105.679,342.399C103.152,340.326 101.532,337.14 101.532,333.569C101.532,327.329 106.478,322.263 112.569,322.263C118.66,322.263 123.605,327.329 123.605,333.569C123.605,337.47 121.672,340.912 118.735,342.945L118.735,369.537C118.735,371.338 117.272,372.801 115.471,372.801L108.943,372.801C107.141,372.801 105.679,371.338 105.679,369.537L105.679,342.399Z" style="fill:rgb(146,146,146);stroke:black;stroke-opacity:0;stroke-width:14.38px;"/>
+        </g>
+        <g transform="matrix(2.526086,0,0,2.526086,89.791765,-376.463108)">
+            <path d="M36.978,227.327L36.978,215.326C36.978,211.978 38.307,208.768 40.675,206.401C43.042,204.033 46.252,202.704 49.6,202.704L49.621,202.704C56.635,202.704 62.322,208.39 62.322,215.405L62.322,227.327" style="fill:none;stroke:rgb(146,146,146);stroke-width:5.69px;"/>
+        </g>
+    </g>
+</svg>
