@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_halcones">
+
+    <ImageView
+        android:id= "@+id/logoHalcones"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src= "@drawable/logo_halcones"/>
+
+    <TextView
+        android:id="@+id/textBienvenido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bienvenido"
+        android:textColor="@color/blanco"
+        android:textSize="32sp"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/logoHalcones"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/textSeleccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/a_halcones"
+        android:textColor="#929292"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/textBienvenido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-8dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutDni"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingresá tu DNI"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:layout_constraintTop_toBottomOf="@id/textSeleccion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:boxBackgroundColor="#33FFFFFF"
+        app:boxStrokeColor="#00000000"
+        app:boxStrokeWidth="0dp"
+        app:hintTextColor="#AAFFFFFF"
+        app:startIconTint="#AAFFFFFF"
+        >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputDni"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#88FFFFFF"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

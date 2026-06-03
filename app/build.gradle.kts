@@ -4,7 +4,7 @@ plugins {
 
 android {
     buildFeatures {
-        viewBinding true
+        viewBinding = true
     }
     namespace = "com.serviam.app"
     compileSdk {
@@ -46,4 +46,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+    implementation("com.google.android.material:material:1.11.0")
 }

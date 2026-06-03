@@ -2,9 +2,11 @@
 <resources>
     <string name="app_name">Serviam</string>
     <string name="selecciona_agrupacion">Seleccioná tu agrupación</string>
-    <string name="halcones">Agrupación Halcones de la Cruz del Sur</string>
+    <string name="halcones">Halcones de la\nCruz del Sur</string>
+    <string name="a_halcones">Agrupación Halcones de la Cruz del Sur</string>
     <string name="santa_juana">Santa Juana de Arco</string>
-    <string name="agrupacion_femenina">Agrupación femenina</string>
+    <string name="agrupacion">Agrupación</string>
+    <string name="serviam">SERVIAM</string>
     <string name="asociacion">ASOCIACIÓN CIVIL SERVIAM</string>
     <string name="bienvenido">BIENVENIDO</string>
     <string name="bienvenida">BIENVENIDA</string>
@@ -24,4 +26,5 @@
     <string name="calendario">Calendario</string>
     <string name="materiales">Materiales</string>
     <string name="campamento">Campamento Activo</string>
+    <string name="flecha">›</string>
 </resources>
