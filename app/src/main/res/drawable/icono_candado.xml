@@ -1,0 +1,27 @@
+<!--
+  ~ Copyright (C) 2026 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="707dp"
+    android:height="940dp"
+    android:viewportWidth="707"
+    android:viewportHeight="940">
+  <path
+      android:pathData="M316.31,612.87C302.69,601.7 293.96,584.52 293.96,565.27C293.96,531.63 320.62,504.32 353.46,504.32C386.29,504.32 412.95,531.63 412.95,565.27C412.95,586.3 402.53,604.85 386.7,615.81L386.7,759.17C386.7,768.87 378.81,776.76 369.1,776.76L333.91,776.76C324.2,776.76 316.31,768.87 316.31,759.17L316.31,612.87Z"
+      android:fillColor="#929292"/>
+  <path
+      android:pathData="M564.77,337.67C645.4,351.21 706.91,421.4 706.91,505.85L706.91,769.43C706.91,863.55 630.5,939.96 536.38,939.96L170.54,939.96C76.42,939.96 0,863.55 0,769.43L0,505.85C0,421.4 61.52,351.21 142.14,337.67L142.14,210.63C142.14,154.77 164.34,101.19 203.84,61.69C243.34,22.19 296.91,0 352.78,0L353,-0L353.06,-0C469.98,-0 564.77,94.78 564.77,211.7L564.77,337.67ZM536.38,412.81L170.54,412.81C119.19,412.81 77.5,454.5 77.5,505.85L77.5,769.43C77.5,820.78 119.19,862.46 170.54,862.46L536.38,862.46C587.72,862.46 629.41,820.78 629.41,769.43L629.41,505.85C629.41,454.5 587.72,412.81 536.38,412.81ZM487.27,335.31L487.27,211.7C487.27,137.59 427.18,77.5 353.06,77.5L352.78,77.5C317.47,77.5 283.6,91.53 258.64,116.49C233.67,141.46 219.64,175.32 219.64,210.63L219.64,335.31L487.27,335.31Z"
+      android:fillColor="#929292"/>
+</vector>

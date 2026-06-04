@@ -12,9 +12,9 @@
     <string name="bienvenida">BIENVENIDA</string>
     <string name="ingresar">INGRESAR</string>
     <string name="registrate">¿Primera vez? Registrate</string>
-    <string name="volver_seleccion">← Volver a la selección</string>
+    <string name="volver_seleccion">Volver a la selección</string>
     <string name="hint_dni">Ingresá tu DNI</string>
-    <string name="hint_contrasena">Contraseña</string>
+    <string name="hint_contrasena">●●●●●●●●●●</string>
     <string name="recordarme">Recordarme</string>
     <string name="crear_cuenta">CREAR CUENTA</string>
     <string name="repetir_contrasena">Repetí la contraseña</string>
@@ -26,5 +26,6 @@
     <string name="calendario">Calendario</string>
     <string name="materiales">Materiales</string>
     <string name="campamento">Campamento Activo</string>
-    <string name="flecha">›</string>
+    <string name="flecha_derecha">›</string>
+    <string name="flecha_izquierda">‹</string>
 </resources>
