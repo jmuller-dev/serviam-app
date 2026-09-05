@@ -40,6 +40,8 @@
         android:text="@string/selecciona_agrupacion"
         android:textColor="#929292"
         android:textSize="16sp"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/textServiam"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/agrupacion"
                     android:textColor="@color/blanco"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="15sp"/>
 
                 <TextView
@@ -92,6 +95,7 @@
                     android:text="@string/halcones"
                     android:textColor="@color/blanco"
                     android:textSize="20sp"
+                    android:fontFamily="@font/montserrat"
                     android:textStyle="bold"/>
 
             </LinearLayout>
@@ -146,6 +150,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/agrupacion"
                     android:textColor="@color/blanco"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="15sp"/>
 
                 <TextView
@@ -154,6 +159,7 @@
                     android:text="@string/santa_juana"
                     android:textColor="@color/blanco"
                     android:textSize="20sp"
+                    android:fontFamily="@font/montserrat"
                     android:textStyle="bold"/>
 
             </LinearLayout>

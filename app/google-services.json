@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "192381172281",
+    "project_id": "serviam-app-1d440",
+    "storage_bucket": "serviam-app-1d440.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192381172281:android:18abec26b9ae8f3e032be8",
+        "android_client_info": {
+          "package_name": "com.serviam.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxESc9AVZo2sLATBydUfXb9NiuQXPlbf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

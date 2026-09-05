@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_halcones"
+    tools:context=".PuntosActivity">
+
+    <!-- CABECERA (TOP HEADER) -->
+    <FrameLayout
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_back_arrow" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
+        android:text="MARCADOR EN VIVO"
+        android:textColor="@color/blanco"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+    <!-- HOJA CONTENEDORA (CONTENT SHEET) -->
+    <ScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_dashboard_sheet"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Nombre de Campamento -->
+            <TextView
+                android:id="@+id/textCampNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/negro"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                tools:text="CAMPAMENTO ANUAL 2026" />
+
+            <!-- CARD DIVISIÓN MAYOR -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="División Mayor"
+                android:textColor="@color/color_halcones"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/blanco"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textMayorEq1"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="15sp"
+                            android:textColor="@color/negro"
+                            tools:text="Equipo A" />
+
+                        <TextView
+                            android:id="@+id/textMayorScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/negro"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            tools:text="150 - 120" />
+
+                        <TextView
+                            android:id="@+id/textMayorEq2"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="15sp"
+                            android:gravity="end"
+                            android:textColor="@color/negro"
+                            tools:text="Equipo B" />
+                    </LinearLayout>
+
+                    <!-- Botones de Puntos Mayor (solo visibles para capitanes) -->
+                    <LinearLayout
+                        android:id="@+id/layoutButtonsMayor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:weightSum="2">
+
+                        <!-- Control Equipo 1 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="start">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMayorEq1Sub"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:backgroundTint="@color/rojo_punto"
+                                android:textColor="@color/blanco"
+                                android:text="-10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMayorEq1Add"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_marginStart="8dp"
+                                android:backgroundTint="@color/verde_punto"
+                                android:textColor="@color/blanco"
+                                android:text="+10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+                        </LinearLayout>
+
+                        <!-- Control Equipo 2 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="end">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMayorEq2Sub"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:backgroundTint="@color/rojo_punto"
+                                android:textColor="@color/blanco"
+                                android:text="-10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMayorEq2Add"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_marginStart="8dp"
+                                android:backgroundTint="@color/verde_punto"
+                                android:textColor="@color/blanco"
+                                android:text="+10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CARD DIVISIÓN MENOR -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="División Menor"
+                android:textColor="@color/color_halcones"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/blanco"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textMenorEq1"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="15sp"
+                            android:textColor="@color/negro"
+                            tools:text="Equipo C" />
+
+                        <TextView
+                            android:id="@+id/textMenorScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/negro"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            tools:text="90 - 110" />
+
+                        <TextView
+                            android:id="@+id/textMenorEq2"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textSize="15sp"
+                            android:gravity="end"
+                            android:textColor="@color/negro"
+                            tools:text="Equipo D" />
+                    </LinearLayout>
+
+                    <!-- Botones de Puntos Menor (solo visibles para capitanes) -->
+                    <LinearLayout
+                        android:id="@+id/layoutButtonsMenor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp"
+                        android:weightSum="2">
+
+                        <!-- Control Equipo 1 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="start">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMenorEq1Sub"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:backgroundTint="@color/rojo_punto"
+                                android:textColor="@color/blanco"
+                                android:text="-10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMenorEq1Add"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_marginStart="8dp"
+                                android:backgroundTint="@color/verde_punto"
+                                android:textColor="@color/blanco"
+                                android:text="+10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+                        </LinearLayout>
+
+                        <!-- Control Equipo 2 -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="end">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMenorEq2Sub"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:backgroundTint="@color/rojo_punto"
+                                android:textColor="@color/blanco"
+                                android:text="-10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnMenorEq2Add"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:layout_marginStart="8dp"
+                                android:backgroundTint="@color/verde_punto"
+                                android:textColor="@color/blanco"
+                                android:text="+10"
+                                android:padding="0dp"
+                                android:textSize="11sp"
+                                app:cornerRadius="22dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Botón Finalizar Campamento (Capitán) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFinalizarCamp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="FINALIZAR CAMPAMENTO"
+                android:textColor="@color/rojo_punto"
+                android:fontFamily="@font/montserrat"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/rojo_punto"
+                app:strokeWidth="1dp"
+                android:layout_marginBottom="32dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

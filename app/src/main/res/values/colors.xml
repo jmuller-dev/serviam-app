@@ -14,4 +14,8 @@
     <color name="fondo_halcones">#DFE2EE</color>
     <color name="verde_punto">#1a7a2e</color>
     <color name="rojo_punto">#B71C1C</color>
+    <color name="brigada_halcones">#27186E</color>
+    <color name="brigada_conquistadores">#8B1A1A</color>
+    <color name="brigada_pioneros">#C4922A</color>
+    <color name="brigada_lenadores">#2E7D32</color>
 </resources>

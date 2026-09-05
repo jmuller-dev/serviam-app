@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,15 +14,82 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ServiamApp">
+        
+        <!-- SplashActivity es la pantalla de carga inicial (LAUNCHER) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- SelectionActivity es la pantalla de selección -->
+        <activity
+            android:name=".SelectionActivity"
+            android:exported="false" />
+
+        <!-- Registramos las demás actividades del proyecto -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DashboardCapitanActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DashboardChicoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".TesoroEspiritualActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ChicosActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PerfilChicoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MaterialesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AgregarMaterialActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DetalleMaterialActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CampamentosActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CrearCampamentoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DetalleCampamentoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PuntosActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CalendarioActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

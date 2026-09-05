@@ -7,28 +7,28 @@
 
     <ImageView
         android:id= "@+id/logoHalcones"
-        android:layout_width="145dp"
-        android:layout_height="145dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src= "@drawable/logo_halcones"/>
+        android:src= "@drawable/ic_user_add"/>
 
     <TextView
         android:id="@+id/textBienvenido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bienvenido"
+        android:text="@string/crear_cuenta"
         android:textColor="@color/blanco"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:fontFamily="@font/montserrat"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/logoHalcones"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/textSeleccion"
@@ -36,18 +36,19 @@
         android:layout_height="wrap_content"
         android:text="@string/a_halcones"
         android:textColor="#929292"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/textBienvenido"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="-8dp"/>
+        android:layout_marginTop="-4dp"/>
 
+    <!-- CAMPO: DNI -->
     <TextView
         android:id="@+id/labelDni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="DNI"
         android:textColor="@color/blanco"
         android:textSize="12sp"
@@ -57,9 +58,9 @@
     <LinearLayout
         android:id="@+id/inputDni"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="22dp"
         android:background="@drawable/bg_input_field"
         android:gravity="center_vertical"
@@ -90,12 +91,13 @@
             android:textSize="14sp"/>
     </LinearLayout>
 
+    <!-- CAMPO: CONTRASEÑA -->
     <TextView
         android:id="@+id/labelPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:text="Contraseña"
         android:textColor="@color/blanco"
         android:textSize="12sp"
@@ -105,9 +107,9 @@
     <LinearLayout
         android:id="@+id/inputPass"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="22dp"
         android:background="@drawable/bg_input_field"
         android:gravity="center_vertical"
@@ -132,7 +134,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="@string/hint_contrasena"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:textColor="@color/blanco"
             android:textColorHint="@color/gris"
             android:textSize="14sp" />
@@ -145,30 +147,74 @@
             android:src="@drawable/icono_ojo"/>
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/checkRecordarme"
+    <!-- CAMPO: REPETIR CONTRASEÑA -->
+    <TextView
+        android:id="@+id/labelPassRepeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="10dp"
-        android:buttonTint="@color/blanco"
-        android:text="@string/recordarme"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/repetir_contrasena"
         android:textColor="@color/blanco"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputPass" />
+        app:layout_constraintTop_toBottomOf="@id/inputPass"/>
 
+    <LinearLayout
+        android:id="@+id/inputPassRepeat"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="22dp"
+        android:background="@drawable/bg_input_field"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelPassRepeat">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/icono_candado" />
+
+        <EditText
+            android:id="@+id/editPassRepeat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_contrasena"
+            android:inputType="textPassword"
+            android:textColor="@color/blanco"
+            android:textColorHint="@color/gris"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/btnTogglePassRepeat"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:contentDescription="@null"
+            android:src="@drawable/icono_ojo"/>
+    </LinearLayout>
+
+    <!-- BOTÓN CREAR CUENTA -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnIngresar"
+        android:id="@+id/btnCrearCuenta"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="22dp"
         android:backgroundTint="@color/blanco"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="@string/ingresar"
+        android:text="@string/crear_cuenta"
         android:textColor="@color/color_halcones"
         android:fontFamily="@font/montserrat"
         android:textStyle="bold"
@@ -176,72 +222,26 @@
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkRecordarme" />
+        app:layout_constraintTop_toBottomOf="@id/inputPassRepeat" />
 
-    <LinearLayout
-        android:id="@+id/dividerContainer"
+    <!-- AVISO DE WHITELIST -->
+    <TextView
+        android:id="@+id/textNotice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="22dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnIngresar">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#35FFFFFF" />
-
-        <View
-            android:layout_width="6dp"
-            android:layout_height="6dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_divider_dot" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#35FFFFFF" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/btnRegistrate"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="22dp"
-        android:background="@drawable/bg_button_outline"
-        android:gravity="center"
-        android:text="@string/registrate"
-        android:textColor="@color/blanco"
-        android:fontFamily="@font/montserrat"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dividerContainer" />
-
-    <TextView
-        android:id="@+id/textVolver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:padding="8dp"
-        android:text="@string/volver_seleccion"
-        android:textColor="@color/color_halcones_mas_claro"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/dni_no_registrado"
+        android:textColor="#C0FFFFFF"
         android:textSize="13sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnRegistrate" />
+        app:layout_constraintTop_toBottomOf="@id/btnCrearCuenta" />
 
+
+    <!-- BARRA INFERIOR -->
     <LinearLayout
         android:id = "@+id/cajaAsociacion"
         android:layout_width="match_parent"
@@ -262,14 +262,13 @@
             android:layout_marginEnd="8dp"/>
 
         <TextView
+            android:id="@+id/textVolver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/volver_seleccion"
             android:textColor="@color/blanco"
             android:textSize="13sp"
-            android:layout_marginTop="-5dp"
-            />
-
+            android:layout_marginTop="-5dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -132,7 +133,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:hint="@string/hint_contrasena"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:textColor="@color/blanco"
             android:textColorHint="@color/gris"
             android:textSize="14sp" />
@@ -229,19 +230,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dividerContainer" />
 
-    <TextView
-        android:id="@+id/textVolver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:padding="8dp"
-        android:text="@string/volver_seleccion"
-        android:textColor="@color/color_halcones_mas_claro"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnRegistrate" />
-
     <LinearLayout
         android:id = "@+id/cajaAsociacion"
         android:layout_width="match_parent"
@@ -262,6 +250,7 @@
             android:layout_marginEnd="8dp"/>
 
         <TextView
+            android:id="@+id/textVolver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/volver_seleccion"
