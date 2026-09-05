@@ -121,7 +121,7 @@
                     android:layout_height="38dp"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="Charlas"
+                    android:text="Cursos"
                     android:textColor="@color/gris"
                     android:textSize="12sp"
                     android:textStyle="bold"

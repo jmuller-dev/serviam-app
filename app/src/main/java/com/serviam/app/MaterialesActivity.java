@@ -175,12 +175,12 @@ public class MaterialesActivity extends AppCompatActivity {
         MaterialButton[] buttons = new MaterialButton[]{
                 binding.btnFilterAll,
                 binding.btnFilterMistica,
-                binding.btnFilterCharlas,
                 binding.btnFilterFormacion,
+                binding.btnFilterCharlas,
                 binding.btnFilterOraciones
         };
 
-        String[] filters = new String[]{"Todos", "Mística", "Charlas", "Formación", "Oraciones"};
+        String[] filters = new String[]{"Todos", "Mística", "Formación", "Cursos", "Oraciones"};
 
         for (int i = 0; i < buttons.length; i++) {
             final String filterName = filters[i];

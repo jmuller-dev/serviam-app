@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="DNI"
+            android:text="DNI (Opcional)"
             android:textColor="@color/negro"
             android:textSize="12sp" />
 
@@ -25,7 +25,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_input_field"
-            android:hint="Ingrese DNI"
+            android:hint="Ingrese DNI (Opcional)"
             android:inputType="number"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
@@ -55,6 +55,7 @@
 
         <!-- Brigada -->
         <TextView
+            android:id="@+id/labelBrigada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"

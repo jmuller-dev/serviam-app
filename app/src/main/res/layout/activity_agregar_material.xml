@@ -199,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="6dp"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/bg_input_field"
                         android:fontFamily="sans-serif"
                         android:hint="Pegá el enlace público del PDF o web"
@@ -209,6 +209,18 @@
                         android:textColor="@color/negro"
                         android:textColorHint="@color/gris"
                         android:textSize="14sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSeleccionarPdfLocal"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="📁 SELECCIONAR PDF LOCAL DEL DISPOSITIVO"
+                        android:textColor="@color/negro"
+                        android:textSize="12sp"
+                        app:strokeColor="@color/gris"
+                        app:cornerRadius="10dp" />
                 </LinearLayout>
 
                 <!-- Botón Guardar -->

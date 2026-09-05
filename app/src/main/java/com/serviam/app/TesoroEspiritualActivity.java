@@ -159,11 +159,46 @@ public class TesoroEspiritualActivity extends AppCompatActivity {
         });
     }
 
+    private android.widget.EditText activeUrlEditText = null;
+
+    private final androidx.activity.result.ActivityResultLauncher<String> pickImageLauncher =
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    subirImagenFirebase(uri);
+                }
+            });
+
+    private void subirImagenFirebase(android.net.Uri uri) {
+        binding.progressImage.setVisibility(View.VISIBLE);
+        Toast.makeText(this, "Subiendo imagen...", Toast.LENGTH_SHORT).show();
+
+        String fileName = "tesoro_" + System.currentTimeMillis() + ".jpg";
+        com.google.firebase.storage.StorageReference storageRef = com.google.firebase.storage.FirebaseStorage.getInstance()
+                .getReference().child(agrupacion).child("tesoro").child(fileName);
+
+        storageRef.putFile(uri)
+                .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                    binding.progressImage.setVisibility(View.GONE);
+                    currentUrlImagen = downloadUri.toString();
+                    if (activeUrlEditText != null) {
+                        activeUrlEditText.setText(currentUrlImagen);
+                    }
+                    Toast.makeText(TesoroEspiritualActivity.this, "Imagen subida correctamente", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
+                    binding.progressImage.setVisibility(View.GONE);
+                    Toast.makeText(TesoroEspiritualActivity.this, "Error al obtener URL de la imagen", Toast.LENGTH_SHORT).show();
+                }))
+                .addOnFailureListener(e -> {
+                    binding.progressImage.setVisibility(View.GONE);
+                    Toast.makeText(TesoroEspiritualActivity.this, "Error al subir imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
     private void mostrarDialogoConfigurar() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
         builder.setTitle("Configurar Tesoro Espiritual");
 
-        // Custom view with three input fields
+        // Custom view with input fields and gallery button
         android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
         layout.setOrientation(android.widget.LinearLayout.VERTICAL);
         layout.setPadding(40, 20, 40, 20);
@@ -179,9 +214,15 @@ public class TesoroEspiritualActivity extends AppCompatActivity {
         layout.addView(inputDesc);
 
         final android.widget.EditText inputUrl = new android.widget.EditText(this);
-        inputUrl.setHint("Enlace público de la imagen (ej: imgur)");
+        inputUrl.setHint("Enlace de imagen o seleccionada de galería");
         inputUrl.setText(currentUrlImagen);
+        activeUrlEditText = inputUrl;
         layout.addView(inputUrl);
+
+        android.widget.Button btnGaleria = new android.widget.Button(this);
+        btnGaleria.setText("🖼️ Seleccionar de la Galería");
+        btnGaleria.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
+        layout.addView(btnGaleria);
 
         builder.setView(layout);
 
@@ -195,8 +236,8 @@ public class TesoroEspiritualActivity extends AppCompatActivity {
                 return;
             }
 
-            if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                Toast.makeText(TesoroEspiritualActivity.this, "El enlace debe comenzar con http:// o https://", Toast.LENGTH_SHORT).show();
+            if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("content://") && !url.startsWith("file://")) {
+                Toast.makeText(TesoroEspiritualActivity.this, "El enlace debe ser válido o haber subido una imagen", Toast.LENGTH_SHORT).show();
                 return;
             }
 

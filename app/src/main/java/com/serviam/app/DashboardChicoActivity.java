@@ -39,9 +39,11 @@ public class DashboardChicoActivity extends AppCompatActivity {
         if (isAdminPreview) {
             binding.bannerAdminPreview.setVisibility(View.VISIBLE);
             binding.btnResetSession.setVisibility(View.GONE);
-            binding.btnReturnToAdmin.setOnClickListener(v -> confirmarSalidaAdminPreview());
+            binding.btnBack.setVisibility(View.GONE);
+            binding.btnReturnToAdmin.setOnClickListener(v -> finish());
         } else {
             binding.bannerAdminPreview.setVisibility(View.GONE);
+            binding.btnBack.setVisibility(View.VISIBLE);
         }
 
         // Manejo de gesto Volver atrás
@@ -49,7 +51,7 @@ public class DashboardChicoActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 if (isAdminPreview) {
-                    confirmarSalidaAdminPreview();
+                    finish();
                 } else {
                     moveTaskToBack(true);
                 }
@@ -116,7 +118,7 @@ public class DashboardChicoActivity extends AppCompatActivity {
         // Volver abajo (atrás)
         binding.btnBack.setOnClickListener(v -> {
             if (isAdminPreview) {
-                confirmarSalidaAdminPreview();
+                finish();
             } else {
                 moveTaskToBack(true);
             }

@@ -41,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
             
             Intent intent;
             // Si el usuario es capitán o admin, entra al Dashboard del Capitán
-            if ("capitan".equalsIgnoreCase(rol) || "admin".equalsIgnoreCase(rol)) {
+            if ("capitan".equalsIgnoreCase(rol) || "admin".equalsIgnoreCase(rol) || "padre".equalsIgnoreCase(rol)) {
                 intent = new Intent(SplashActivity.this, DashboardCapitanActivity.class);
             } else {
                 // Si es chico, va a DashboardChicoActivity

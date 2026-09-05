@@ -188,9 +188,22 @@ public class ChicosActivity extends AppCompatActivity {
                                     String rol = rawRol != null ? String.valueOf(rawRol) : null;
                                     Object rawEmail = doc.get("email");
                                     String email = rawEmail != null ? String.valueOf(rawEmail) : "";
+                                    Object rawBrigada = doc.get("brigada");
+                                    String brigada = rawBrigada != null ? String.valueOf(rawBrigada) : "";
 
                                     if (dni != null && !dni.isEmpty() && nombre != null) {
-                                        String brigadaLabel = "capitan".equalsIgnoreCase(rol) ? "Capitanes" : "Admins";
+                                        if ("juanas".equalsIgnoreCase(agrupacion) && ("admin".equalsIgnoreCase(rol) || "admins".equalsIgnoreCase(brigada) || "admin".equalsIgnoreCase(brigada))) {
+                                            continue; // Omitir Admin de la lista pública de Santa Juana
+                                        }
+
+                                        String brigadaLabel;
+                                        if (!brigada.isEmpty()) {
+                                            brigadaLabel = brigada;
+                                        } else if ("padre".equalsIgnoreCase(rol)) {
+                                            brigadaLabel = "Padre";
+                                        } else {
+                                            brigadaLabel = "juanas".equalsIgnoreCase(agrupacion) ? "Dirigentes" : "Capitanes";
+                                        }
                                         Chico usuarioVirtual = new Chico(dni, nombre, brigadaLabel, 0, "N/A", email, "N/A", "", true);
                                         usuarioVirtual.setAgrupacion(agrupacion);
                                         dbUsuariosList.add(usuarioVirtual);
@@ -250,6 +263,10 @@ public class ChicosActivity extends AppCompatActivity {
         
         for (Chico c : dbChicosList) {
             if (c.getDni() != null && c.isActivo()) {
+                if ("juanas".equalsIgnoreCase(agrupacion)) {
+                    String b = c.getBrigada() != null ? c.getBrigada().toLowerCase() : "";
+                    if (b.contains("admin")) continue;
+                }
                 uniqueChicos.put(c.getDni(), c);
             }
         }
@@ -313,6 +330,9 @@ public class ChicosActivity extends AppCompatActivity {
     private boolean matchesFilter(String chicoBrigada, String filter) {
         if (filter.equals("Todos")) return true;
         if (chicoBrigada == null) return false;
+        if (filter.equalsIgnoreCase("Capitanes") || filter.equalsIgnoreCase("Dirigentes")) {
+            return chicoBrigada.equalsIgnoreCase("Capitanes") || chicoBrigada.equalsIgnoreCase("Dirigentes") || chicoBrigada.equalsIgnoreCase("capitan") || chicoBrigada.equalsIgnoreCase("dirigente") || chicoBrigada.equalsIgnoreCase("Admins") || chicoBrigada.equalsIgnoreCase("Admin");
+        }
         if ("juanas".equalsIgnoreCase(agrupacion)) {
             if (filter.equalsIgnoreCase("Halcones")) {
                 return chicoBrigada.equalsIgnoreCase("Halcones") || chicoBrigada.equalsIgnoreCase("Juana") || chicoBrigada.equalsIgnoreCase("santa juana");
@@ -326,11 +346,20 @@ public class ChicosActivity extends AppCompatActivity {
             if (filter.equalsIgnoreCase("Leñadores")) {
                 return chicoBrigada.equalsIgnoreCase("Leñadores") || chicoBrigada.equalsIgnoreCase("lenadores") || chicoBrigada.equalsIgnoreCase("Jacinta") || chicoBrigada.equalsIgnoreCase("santa jacinta");
             }
-            if (filter.equalsIgnoreCase("Capitanes")) {
-                return chicoBrigada.equalsIgnoreCase("Capitanes") || chicoBrigada.equalsIgnoreCase("Dirigentes") || chicoBrigada.equalsIgnoreCase("capitan") || chicoBrigada.equalsIgnoreCase("dirigente");
-            }
         }
         return chicoBrigada.equalsIgnoreCase(filter);
+    }
+
+    private int getHierarchyWeight(Chico c) {
+        if (c == null) return 99;
+        String brigada = c.getBrigada() != null ? c.getBrigada().toLowerCase() : "";
+        if (brigada.contains("padre") || brigada.contains("sacerdote")) return 0;
+        if (brigada.contains("capitan") || brigada.contains("dirigente") || brigada.contains("admin")) return 1;
+        if (brigada.contains("halcones") || brigada.contains("juana")) return 2;
+        if (brigada.contains("conquistadores") || brigada.contains("goretti")) return 3;
+        if (brigada.contains("pioneros") || brigada.contains("ines") || brigada.contains("inés")) return 4;
+        if (brigada.contains("lenadores") || brigada.contains("leñadores") || brigada.contains("jacinta")) return 5;
+        return 6;
     }
 
     private void applyFilters() {
@@ -350,6 +379,8 @@ public class ChicosActivity extends AppCompatActivity {
                 filteredChicosList.add(c);
             }
         }
+
+        java.util.Collections.sort(filteredChicosList, (c1, c2) -> Integer.compare(getHierarchyWeight(c1), getHierarchyWeight(c2)));
 
         adapter.notifyDataSetChanged();
 
@@ -375,6 +406,11 @@ public class ChicosActivity extends AppCompatActivity {
         EditText editTelChico = dialogView.findViewById(R.id.editTelChico);
         EditText editTelPadres = dialogView.findViewById(R.id.editTelPadres);
 
+        TextView labelBrigada = dialogView.findViewById(R.id.labelBrigada);
+        if (labelBrigada != null && "juanas".equalsIgnoreCase(agrupacion)) {
+            labelBrigada.setText("Compañía");
+        }
+
         // Adaptar fondos de cajas de texto del diálogo al color del grupo
         int inputBg = agrupacion.equals("juanas") ? R.drawable.bg_input_field_juanas : R.drawable.bg_input_field;
         editDni.setBackgroundResource(inputBg);
@@ -383,6 +419,7 @@ public class ChicosActivity extends AppCompatActivity {
         editFechaNac.setBackgroundResource(inputBg);
         editTelChico.setBackgroundResource(inputBg);
         editTelPadres.setBackgroundResource(inputBg);
+        spinnerBrigada.setBackgroundResource(inputBg);
 
         // Auto-formateador de fecha DD/MM/AAAA al escribir
         aplicarFormatoFechaAuto(editFechaNac);
@@ -407,18 +444,21 @@ public class ChicosActivity extends AppCompatActivity {
             String telChico = editTelChico.getText().toString().trim();
             String telPadres = editTelPadres.getText().toString().trim();
 
-            if (dni.isEmpty() || nombre.isEmpty()) {
-                Toast.makeText(ChicosActivity.this, "DNI y Nombre son requeridos", Toast.LENGTH_SHORT).show();
+            if (nombre.isEmpty()) {
+                Toast.makeText(ChicosActivity.this, "El Nombre es requerido", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            Chico nuevoChico = new Chico(dni, nombre, brigada, 0, fechaNac, telChico, telPadres, "", true);
+            String docId = dni.isEmpty() ? repository.getChicosCollection(agrupacion).document().getId() : dni;
+            String finalDni = dni.isEmpty() ? "" : dni;
+
+            Chico nuevoChico = new Chico(docId, nombre, brigada, 0, fechaNac, telChico, telPadres, "", true);
             nuevoChico.setAgrupacion(agrupacion);
             int edadCalculada = nuevoChico.getEdad();
             nuevoChico.setEdad(edadCalculada);
 
             // Guardar en Firestore
-            repository.getChicosCollection(agrupacion).document(dni).set(nuevoChico)
+            repository.getChicosCollection(agrupacion).document(docId).set(nuevoChico)
                     .addOnSuccessListener(aVoid -> Toast.makeText(ChicosActivity.this, "Integrante agregado correctamente", Toast.LENGTH_SHORT).show())
                     .addOnFailureListener(e -> Toast.makeText(ChicosActivity.this, "Error al sincronizar con la nube", Toast.LENGTH_SHORT).show());
         });
@@ -464,12 +504,22 @@ public class ChicosActivity extends AppCompatActivity {
             void bind(Chico chico) {
                 textNombre.setText(chico.getNombre() != null ? chico.getNombre() : "");
                 
-                String label = "juanas".equalsIgnoreCase(agrupacion) ? "Compañía" : "Brigada";
                 String brigadaVal = chico.getBrigada() != null ? chico.getBrigada() : "";
-                String displayBrigada = getBrigadaDisplay(brigadaVal, agrupacion);
-                textDetail.setText(label + ": " + displayBrigada + " | DNI: " + (chico.getDni() != null ? chico.getDni() : ""));
+                String displayDetail;
+                if (brigadaVal.equalsIgnoreCase("Padre") || brigadaVal.equalsIgnoreCase("Sacerdote")) {
+                    displayDetail = "Padre";
+                } else if (brigadaVal.equalsIgnoreCase("Capitanes") || brigadaVal.equalsIgnoreCase("Dirigentes") || brigadaVal.equalsIgnoreCase("Admins")) {
+                    displayDetail = "juanas".equalsIgnoreCase(agrupacion) ? "Dirigente" : "Capitán";
+                } else {
+                    String label = "juanas".equalsIgnoreCase(agrupacion) ? "Compañía" : "Brigada";
+                    String displayBrigada = getBrigadaDisplay(brigadaVal, agrupacion);
+                    displayDetail = label + ": " + displayBrigada;
+                }
 
-                // Configurar color del bólster (indicador)
+                String dniDisplay = (chico.getDni() != null && !chico.getDni().isEmpty() && chico.getDni().length() <= 12 && !chico.getDni().contains("-")) ? " | DNI: " + chico.getDni() : "";
+                textDetail.setText(displayDetail + dniDisplay);
+
+                // Configurar color del bólster (indicador) - Negro para Capitanes, Admins y Padre
                 int colorRes;
                 switch (brigadaVal.toLowerCase()) {
                     case "conquistadores":
@@ -489,7 +539,9 @@ public class ChicosActivity extends AppCompatActivity {
                     case "capitanes":
                     case "dirigentes":
                     case "admins":
-                        colorRes = "juanas".equalsIgnoreCase(agrupacion) ? R.color.color_juanas_oscuro : R.color.color_halcones_oscuro;
+                    case "padre":
+                    case "sacerdote":
+                        colorRes = R.color.negro;
                         break;
                     case "halcones":
                     case "juana":

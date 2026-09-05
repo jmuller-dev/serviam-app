@@ -211,6 +211,7 @@ public class PerfilChicoActivity extends AppCompatActivity {
             binding.btnCallChico.setColorFilter(primaryColor);
             binding.btnCallPadres.setColorFilter(primaryColor);
             binding.btnBack.setBackgroundTintList(ColorStateList.valueOf(darkColor));
+            binding.btnEdit.setBackgroundTintList(ColorStateList.valueOf(darkColor));
         } else {
             primaryColor = ContextCompat.getColor(this, R.color.color_halcones);
             darkColor = ContextCompat.getColor(this, R.color.color_halcones_oscuro);
@@ -221,6 +222,7 @@ public class PerfilChicoActivity extends AppCompatActivity {
             binding.btnCallChico.setColorFilter(primaryColor);
             binding.btnCallPadres.setColorFilter(primaryColor);
             binding.btnBack.setBackgroundTintList(ColorStateList.valueOf(darkColor));
+            binding.btnEdit.setBackgroundTintList(ColorStateList.valueOf(darkColor));
         }
     }
 
@@ -240,7 +242,13 @@ public class PerfilChicoActivity extends AppCompatActivity {
 
     private void cargarDatosChico(Chico chico) {
         binding.textChicoNombre.setText(chico.getNombre());
-        binding.textChicoDni.setText("DNI: " + chico.getDni());
+        String dniVal = chico.getDni();
+        boolean isRealDni = dniVal != null && !dniVal.isEmpty() && dniVal.length() <= 12 && !dniVal.contains("-") && (targetUserUid == null || !dniVal.equalsIgnoreCase(targetUserUid));
+        if (isRealDni) {
+            binding.textChicoDni.setText("DNI: " + dniVal);
+        } else {
+            binding.textChicoDni.setText("DNI: No registrado");
+        }
         
         // Inicial en avatar
         if (chico.getNombre() != null && !chico.getNombre().isEmpty()) {
@@ -271,7 +279,9 @@ public class PerfilChicoActivity extends AppCompatActivity {
             case "capitanes":
             case "dirigentes":
             case "admins":
-                colorRes = "juanas".equalsIgnoreCase(agrupacion) ? R.color.color_juanas_oscuro : R.color.color_halcones_oscuro;
+            case "padre":
+            case "sacerdote":
+                colorRes = R.color.negro;
                 break;
             case "halcones":
             case "juana":
@@ -308,26 +318,40 @@ public class PerfilChicoActivity extends AppCompatActivity {
                 "capitan".equalsIgnoreCase(brigadaRaw) ||
                 "admin".equalsIgnoreCase(brigadaRaw) ||
                 "dirigente".equalsIgnoreCase(brigadaRaw) ||
-                (isOwnProfile && ("admin".equalsIgnoreCase(userRol) || "capitan".equalsIgnoreCase(userRol) || "dirigente".equalsIgnoreCase(userRol)));
+                "padre".equalsIgnoreCase(brigadaRaw) ||
+                (isOwnProfile && ("admin".equalsIgnoreCase(userRol) || "capitan".equalsIgnoreCase(userRol) || "dirigente".equalsIgnoreCase(userRol) || "padre".equalsIgnoreCase(userRol)));
+
+        if (isCapitanOrAdminMember) {
+            // Eliminar contacto de tutor para Padre, Capitanes, Dirigentes y Admins (son mayores de edad)
+            binding.dividerPadres.setVisibility(View.GONE);
+            binding.labelContactoPadres.setVisibility(View.GONE);
+            binding.layoutContactoPadres.setVisibility(View.GONE);
+        } else {
+            binding.dividerPadres.setVisibility(View.VISIBLE);
+            binding.labelContactoPadres.setVisibility(View.VISIBLE);
+            binding.layoutContactoPadres.setVisibility(View.VISIBLE);
+        }
 
         if (isOwnProfile) {
             binding.btnBajaChico.setVisibility(View.GONE);
-        } else if ("admin".equalsIgnoreCase(userRol) || "capitan".equalsIgnoreCase(userRol)) {
+        } else if ("admin".equalsIgnoreCase(userRol) || "capitan".equalsIgnoreCase(userRol) || "padre".equalsIgnoreCase(userRol)) {
             binding.btnBajaChico.setVisibility(View.VISIBLE);
         } else {
             binding.btnBajaChico.setVisibility(View.GONE);
         }
 
-        if (isCapitanOrAdminMember) {
-            // Admins, Capitanes y Dirigentes NO tienen registro de asistencia
+        boolean isHalconesGroup = !"juanas".equalsIgnoreCase(agrupacion);
+
+        if (isHalconesGroup || isCapitanOrAdminMember) {
+            // En Halcones NO hay asistencia para nadie. En Santa Juana, Dirigentes/Admins/Padre tampoco tienen asistencia.
             binding.labelAsistencia.setVisibility(View.GONE);
             binding.cardAsistencia.setVisibility(View.GONE);
             binding.btnToggleAsistenciaHoy.setVisibility(View.GONE);
         } else {
-            // Solo los chicos tienen registro de asistencia
+            // Solo las chicas de Santa Juana tienen registro de asistencia
             binding.labelAsistencia.setVisibility(View.VISIBLE);
             binding.cardAsistencia.setVisibility(View.VISIBLE);
-            if (!isOwnProfile && ("admin".equalsIgnoreCase(userRol) || "capitan".equalsIgnoreCase(userRol))) {
+            if ("admin".equalsIgnoreCase(userRol) || "capitan".equalsIgnoreCase(userRol) || "dirigente".equalsIgnoreCase(userRol) || "padre".equalsIgnoreCase(userRol)) {
                 binding.btnToggleAsistenciaHoy.setVisibility(View.VISIBLE);
             } else {
                 binding.btnToggleAsistenciaHoy.setVisibility(View.GONE);
@@ -638,8 +662,15 @@ public class PerfilChicoActivity extends AppCompatActivity {
         EditText editTelPadres = dialogView.findViewById(R.id.editTelPadres);
 
         // Pre-llenar campos
-        editDni.setText(currentChico.getDni());
-        editDni.setEnabled(false); // DNI is read-only
+        String currentDniVal = currentChico.getDni();
+        boolean isRealDni = currentDniVal != null && !currentDniVal.isEmpty() && currentDniVal.length() <= 12 && !currentDniVal.contains("-") && (targetUserUid == null || !currentDniVal.equalsIgnoreCase(targetUserUid));
+
+        if (isRealDni) {
+            editDni.setText(currentDniVal);
+        } else {
+            editDni.setText("");
+        }
+        editDni.setEnabled(true); // Permite editar o agregar DNI
         editNombre.setText(currentChico.getNombre());
         editEdad.setText(String.valueOf(currentChico.getEdad()));
         editFechaNac.setText(currentChico.getFechaNacimiento());
@@ -649,6 +680,11 @@ public class PerfilChicoActivity extends AppCompatActivity {
         // Auto-formateador de fecha DD/MM/AAAA
         ChicosActivity.aplicarFormatoFechaAuto(editFechaNac);
 
+        TextView labelBrigada = dialogView.findViewById(R.id.labelBrigada);
+        if (labelBrigada != null && "juanas".equalsIgnoreCase(agrupacion)) {
+            labelBrigada.setText("Compañía");
+        }
+
         // Adaptar fondos de cajas de texto del diálogo al color del grupo
         int inputBg = agrupacion.equals("juanas") ? R.drawable.bg_input_field_juanas : R.drawable.bg_input_field;
         editDni.setBackgroundResource(inputBg);
@@ -657,6 +693,7 @@ public class PerfilChicoActivity extends AppCompatActivity {
         editFechaNac.setBackgroundResource(inputBg);
         editTelChico.setBackgroundResource(inputBg);
         editTelPadres.setBackgroundResource(inputBg);
+        spinnerBrigada.setBackgroundResource(inputBg);
 
         // Configurar Spinner de Brigadas/Compañías
         String[] brigadas;
@@ -681,6 +718,7 @@ public class PerfilChicoActivity extends AppCompatActivity {
 
         builder.setTitle("Editar Integrante");
         builder.setPositiveButton("Guardar", (dialog, which) -> {
+            String inputDni = editDni.getText().toString().trim();
             String nombre = editNombre.getText().toString().trim();
             String brigada = spinnerBrigada.getSelectedItem().toString();
             String fechaNac = editFechaNac.getText().toString().trim();
@@ -690,6 +728,13 @@ public class PerfilChicoActivity extends AppCompatActivity {
             if (nombre.isEmpty()) {
                 Toast.makeText(PerfilChicoActivity.this, "El nombre es requerido", Toast.LENGTH_SHORT).show();
                 return;
+            }
+
+            // Actualizar DNI si fue ingresado
+            if (!inputDni.isEmpty()) {
+                currentChico.setDni(inputDni);
+            } else if (!isRealDni && chicoDni != null) {
+                currentChico.setDni(chicoDni);
             }
 
             // Actualizar objeto
@@ -703,6 +748,8 @@ public class PerfilChicoActivity extends AppCompatActivity {
             if (currentChico.getAgrupacion() == null || currentChico.getAgrupacion().isEmpty()) {
                 currentChico.setAgrupacion(agrupacion);
             }
+
+            String docIdToUse = (chicoDni != null && !chicoDni.isEmpty()) ? chicoDni : currentChico.getDni();
 
             if (targetUserUid != null) {
                 // Es un usuario de la colección de usuarios (Capitán / Admin)
@@ -721,7 +768,8 @@ public class PerfilChicoActivity extends AppCompatActivity {
                         .set(updates, com.google.firebase.firestore.SetOptions.merge())
                         .addOnSuccessListener(aVoid -> {
                             // También actualizar en colección de chicos si existe
-                            repository.getChicosCollection(agrupacion).document(currentChico.getDni()).set(currentChico);
+                            repository.getChicosCollection(agrupacion).document(docIdToUse).set(currentChico);
+                            repository.insertLocalChico(currentChico);
                             runOnUiThread(() -> {
                                 Toast.makeText(PerfilChicoActivity.this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show();
                                 cargarDatosChico(currentChico);
@@ -735,8 +783,9 @@ public class PerfilChicoActivity extends AppCompatActivity {
                 if (currentChico.getDni().equalsIgnoreCase(prefs.getUserDni())) {
                     prefs.setUserNombre(currentChico.getNombre());
                 }
-                repository.getChicosCollection(agrupacion).document(currentChico.getDni()).set(currentChico)
+                repository.getChicosCollection(agrupacion).document(docIdToUse).set(currentChico)
                         .addOnSuccessListener(aVoid -> {
+                            repository.insertLocalChico(currentChico);
                             runOnUiThread(() -> {
                                 Toast.makeText(PerfilChicoActivity.this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show();
                                 cargarDatosChico(currentChico);

@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             // Ir al Dashboard según el rol
                             Intent intent;
-                            if ("capitan".equalsIgnoreCase(rol) || "admin".equalsIgnoreCase(rol)) {
+                            if ("capitan".equalsIgnoreCase(rol) || "admin".equalsIgnoreCase(rol) || "padre".equalsIgnoreCase(rol)) {
                                 intent = new Intent(LoginActivity.this, DashboardCapitanActivity.class);
                             } else {
                                 intent = new Intent(LoginActivity.this, DashboardChicoActivity.class);

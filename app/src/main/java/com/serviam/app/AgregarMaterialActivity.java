@@ -22,6 +22,13 @@ public class AgregarMaterialActivity extends AppCompatActivity {
     private PreferencesManager prefs;
     private String agrupacion;
 
+    private final androidx.activity.result.ActivityResultLauncher<String> pickPdfLauncher =
+            registerForActivityResult(new androidx.activity.result.contract.ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    subirPdfFirebase(uri);
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +58,8 @@ public class AgregarMaterialActivity extends AppCompatActivity {
         // Volver atrás
         binding.btnBack.setOnClickListener(v -> finish());
 
-        // Setup Spinner Categoría
-        String[] categorias = new String[]{"Mística", "Charlas", "Formación", "Oraciones"};
+        // Setup Spinner Categoría (Mística, Formación, Cursos, Oraciones)
+        String[] categorias = new String[]{"Mística", "Formación", "Cursos", "Oraciones"};
         ArrayAdapter<String> spinnerAdapterCat = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categorias);
         spinnerAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerCategoria.setAdapter(spinnerAdapterCat);
@@ -74,7 +81,7 @@ public class AgregarMaterialActivity extends AppCompatActivity {
                     binding.containerUrl.setVisibility(View.VISIBLE);
                     if (position == 1) {
                         binding.labelUrlHeader.setText("Enlace del Archivo PDF");
-                        binding.editUrlArchivo.setHint("Pegá el enlace directo al PDF aquí");
+                        binding.editUrlArchivo.setHint("Pegá el enlace directo al PDF aquí o seleccionalo de tu dispositivo");
                     } else {
                         binding.labelUrlHeader.setText("Enlace Web / Externo");
                         binding.editUrlArchivo.setHint("Pegá el enlace web aquí (https://...)");
@@ -86,8 +93,37 @@ public class AgregarMaterialActivity extends AppCompatActivity {
             public void onNothingSelected(android.widget.AdapterView<?> parent) {}
         });
 
+        binding.btnSeleccionarPdfLocal.setOnClickListener(v -> pickPdfLauncher.launch("application/pdf"));
+
         // Botón guardar
         binding.btnGuardar.setOnClickListener(v -> guardarMaterial());
+    }
+
+    private void subirPdfFirebase(android.net.Uri uri) {
+        binding.progressUpload.setVisibility(View.VISIBLE);
+        binding.btnGuardar.setEnabled(false);
+        Toast.makeText(this, "Subiendo PDF...", Toast.LENGTH_SHORT).show();
+
+        String fileName = "pdf_" + System.currentTimeMillis() + ".pdf";
+        com.google.firebase.storage.StorageReference storageRef = com.google.firebase.storage.FirebaseStorage.getInstance()
+                .getReference().child(agrupacion).child("materiales").child(fileName);
+
+        storageRef.putFile(uri)
+                .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                    binding.progressUpload.setVisibility(View.GONE);
+                    binding.btnGuardar.setEnabled(true);
+                    binding.editUrlArchivo.setText(downloadUri.toString());
+                    Toast.makeText(AgregarMaterialActivity.this, "PDF cargado correctamente", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
+                    binding.progressUpload.setVisibility(View.GONE);
+                    binding.btnGuardar.setEnabled(true);
+                    Toast.makeText(AgregarMaterialActivity.this, "Error al obtener URL del PDF", Toast.LENGTH_SHORT).show();
+                }))
+                .addOnFailureListener(e -> {
+                    binding.progressUpload.setVisibility(View.GONE);
+                    binding.btnGuardar.setEnabled(true);
+                    Toast.makeText(AgregarMaterialActivity.this, "Error al subir PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void personalizarDiseno(String agrupacion) {
@@ -112,6 +148,8 @@ public class AgregarMaterialActivity extends AppCompatActivity {
         binding.editNombre.setBackgroundResource(inputBg);
         binding.editContenidoTexto.setBackgroundResource(inputBg);
         binding.editUrlArchivo.setBackgroundResource(inputBg);
+        binding.spinnerCategoria.setBackgroundResource(inputBg);
+        binding.spinnerTipoFormato.setBackgroundResource(inputBg);
     }
 
     private void guardarMaterial() {

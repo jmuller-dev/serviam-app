@@ -151,7 +151,8 @@ public class RegisterActivity extends AppCompatActivity {
                         DocumentSnapshot doc = taskCap.getResult().getDocuments().get(0);
                         String nombre = doc.getString("nombre");
                         String rol = doc.getString("rol");
-                        crearCuentaFirebase(email, pass, nombre, dni, rol != null ? rol : "capitan");
+                        String whitelistDocId = doc.getId();
+                        crearCuentaFirebase(email, pass, nombre, dni, rol != null ? rol : "capitan", whitelistDocId);
                     } else {
                         binding.btnCrearCuenta.setEnabled(true);
                         Toast.makeText(RegisterActivity.this, "El DNI no está registrado en la whitelist. Hablá con tu Capitán.", Toast.LENGTH_LONG).show();
@@ -162,6 +163,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void crearCuentaFirebase(String email, String pass, String nombre, String dni, String rol) {
+        crearCuentaFirebase(email, pass, nombre, dni, rol, null);
+    }
+
+    private void crearCuentaFirebase(String email, String pass, String nombre, String dni, String rol, String whitelistDocId) {
         repository.register(email, pass).addOnCompleteListener(authTask -> {
             if (authTask.isSuccessful() && authTask.getResult() != null) {
                 String uid = authTask.getResult().getUser().getUid();
@@ -169,6 +174,11 @@ public class RegisterActivity extends AppCompatActivity {
                 // Registramos al usuario en la colección correspondiente en Firestore
                 repository.guardarUsuario(agrupacion, uid, nombre, dni, email, rol).addOnCompleteListener(dbTask -> {
                     if (dbTask.isSuccessful()) {
+                        // Eliminar el documento precargado de la whitelist para evitar duplicados en 'usuarios'
+                        if (whitelistDocId != null && !whitelistDocId.equals(uid)) {
+                            repository.getUsuariosCollection(agrupacion).document(whitelistDocId).delete();
+                        }
+
                         // Guardamos localmente en preferencias
                         PreferencesManager prefs = new PreferencesManager(RegisterActivity.this);
                         prefs.setSession(uid, dni, rol, agrupacion, nombre, true);
@@ -177,7 +187,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         // Navegamos al Dashboard según el rol
                         Intent intent;
-                        if ("capitan".equalsIgnoreCase(rol) || "admin".equalsIgnoreCase(rol)) {
+                        if ("capitan".equalsIgnoreCase(rol) || "admin".equalsIgnoreCase(rol) || "padre".equalsIgnoreCase(rol)) {
                             intent = new Intent(RegisterActivity.this, DashboardCapitanActivity.class);
                         } else {
                             intent = new Intent(RegisterActivity.this, DashboardChicoActivity.class);

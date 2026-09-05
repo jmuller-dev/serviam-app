@@ -71,20 +71,26 @@ public class DashboardCapitanActivity extends AppCompatActivity {
 
         personalizarDashboard(agrupacion);
 
-        // Configurar menú desplegable para Admin / botón de logout para Capitanes
-        if ("admin".equalsIgnoreCase(userRol)) {
+        // Configurar menú desplegable para Admin / Padre / botón de logout para Capitanes
+        if ("admin".equalsIgnoreCase(userRol) || "padre".equalsIgnoreCase(userRol)) {
             binding.btnMenuAdmin.setVisibility(View.VISIBLE);
             binding.btnResetSession.setVisibility(View.GONE);
 
             binding.btnMenuAdmin.setOnClickListener(v -> {
                 androidx.appcompat.widget.PopupMenu popup = new androidx.appcompat.widget.PopupMenu(DashboardCapitanActivity.this, binding.btnMenuAdmin);
                 popup.getMenu().add(0, 1, 0, "Cambiar de Agrupación");
-                popup.getMenu().add(0, 2, 1, "Ver Vista de Chico");
-                popup.getMenu().add(0, 4, 2, "Resumen Estadístico");
-                popup.getMenu().add(0, 5, 3, "Resincronizar Datos");
-                popup.getMenu().add(0, 6, 4, "Probar Notificación");
-                popup.getMenu().add(0, 7, 5, "Diagnóstico del Sistema (Debug)");
-                popup.getMenu().add(0, 3, 6, "Cerrar Sesión");
+
+                if ("admin".equalsIgnoreCase(userRol)) {
+                    popup.getMenu().add(0, 2, 1, "Ver Vista de Chico");
+                    popup.getMenu().add(0, 8, 2, "Gestionar Roles / Usuarios");
+                    popup.getMenu().add(0, 4, 3, "Resumen Estadístico");
+                    popup.getMenu().add(0, 5, 4, "Resincronizar Datos");
+                    popup.getMenu().add(0, 6, 5, "Probar Notificación");
+                    popup.getMenu().add(0, 7, 6, "Diagnóstico del Sistema (Debug)");
+                    popup.getMenu().add(0, 3, 7, "Cerrar Sesión");
+                } else { // "padre"
+                    popup.getMenu().add(0, 3, 1, "Cerrar Sesión");
+                }
 
                 popup.setOnMenuItemClickListener(item -> {
                     int itemId = item.getItemId();
@@ -105,6 +111,9 @@ public class DashboardCapitanActivity extends AppCompatActivity {
                             intent.putExtra("IS_ADMIN_PREVIEW", true);
                             startActivity(intent);
                         }, 150);
+                        return true;
+                    } else if (itemId == 8) {
+                        mostrarGestionarRoles();
                         return true;
                     } else if (itemId == 4) {
                         mostrarResumenEstadistico();
@@ -534,5 +543,68 @@ public class DashboardCapitanActivity extends AppCompatActivity {
                 .setMessage(sb.toString())
                 .setPositiveButton("Cerrar", null)
                 .show();
+    }
+
+    private void mostrarGestionarRoles() {
+        repository.getUsuariosCollection(agrupacion).get()
+                .addOnSuccessListener(snapshots -> {
+                    if (snapshots == null || snapshots.isEmpty()) {
+                        Toast.makeText(this, "No hay usuarios registrados.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    java.util.List<com.google.firebase.firestore.DocumentSnapshot> docs = snapshots.getDocuments();
+                    String[] userNames = new String[docs.size()];
+                    for (int i = 0; i < docs.size(); i++) {
+                        com.google.firebase.firestore.DocumentSnapshot d = docs.get(i);
+                        String name = d.getString("nombre");
+                        String rol = d.getString("rol");
+                        String dni = d.getString("dni");
+                        userNames[i] = (name != null ? name : "Sin nombre") + " (" + (rol != null ? rol.toUpperCase() : "CHICO") + " - DNI: " + (dni != null ? dni : "N/A") + ")";
+                    }
+
+                    new androidx.appcompat.app.AlertDialog.Builder(DashboardCapitanActivity.this)
+                            .setTitle("Gestionar Roles (Seleccionar Usuario)")
+                            .setItems(userNames, (dialog, which) -> {
+                                com.google.firebase.firestore.DocumentSnapshot selectedUserDoc = docs.get(which);
+                                String selectedName = selectedUserDoc.getString("nombre");
+                                String currentRol = selectedUserDoc.getString("rol");
+
+                                String[] rolesDisplay = new String[]{"Admin (Administrador General)", "Padre (Asesor de Agrupación)", "Capitán (Capitán / Dirigente)", "Chico (Integrante)"};
+                                String[] rolesKeys = new String[]{"admin", "padre", "capitan", "chico"};
+
+                                int selectedIndex = -1;
+                                if (currentRol != null) {
+                                    for (int r = 0; r < rolesKeys.length; r++) {
+                                        if (rolesKeys[r].equalsIgnoreCase(currentRol)) {
+                                            selectedIndex = r;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                final int[] chosenIndex = {selectedIndex};
+                                new androidx.appcompat.app.AlertDialog.Builder(DashboardCapitanActivity.this)
+                                        .setTitle("Asignar rol a " + selectedName)
+                                        .setSingleChoiceItems(rolesDisplay, selectedIndex, (dialogRol, whichRol) -> {
+                                            chosenIndex[0] = whichRol;
+                                        })
+                                        .setPositiveButton("Guardar Rol", (dialogRol, whichBtn) -> {
+                                            if (chosenIndex[0] >= 0 && chosenIndex[0] < rolesKeys.length) {
+                                                String newRol = rolesKeys[chosenIndex[0]];
+                                                repository.getUsuariosCollection(agrupacion).document(selectedUserDoc.getId())
+                                                        .update("rol", newRol)
+                                                        .addOnSuccessListener(aVoid -> {
+                                                            Toast.makeText(DashboardCapitanActivity.this, "¡Rol de " + selectedName + " actualizado a " + newRol.toUpperCase() + "!", Toast.LENGTH_LONG).show();
+                                                        })
+                                                        .addOnFailureListener(e -> Toast.makeText(DashboardCapitanActivity.this, "Error al actualizar rol", Toast.LENGTH_SHORT).show());
+                                            }
+                                        })
+                                        .setNegativeButton("Cancelar", null)
+                                        .show();
+                            })
+                            .setNegativeButton("Cancelar", null)
+                            .show();
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Error al obtener usuarios", Toast.LENGTH_SHORT).show());
     }
 }

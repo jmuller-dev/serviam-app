@@ -42,16 +42,13 @@ public class SantoralUtils {
         SANTORAL_MAP.put("01-31", new SantoInfo("San Juan Bosco", "Padre y Maestro de la Juventud"));
 
         // Febrero
-        SANTORAL_MAP.put("02-02", new SantoInfo("Nuestra Señora de la Candelaria", "Fiesta de la Luz"));
         SANTORAL_MAP.put("02-11", new SantoInfo("Nuestra Señora de Lourdes", "Jornada Mundial del Enfermo"));
-        SANTORAL_MAP.put("02-14", new SantoInfo("San Valentín", "Patrono del Amor y la Amistad"));
 
         // Marzo
         SANTORAL_MAP.put("03-19", new SantoInfo("San José", "Esposo de la Virgen María y Protector"));
         SANTORAL_MAP.put("03-25", new SantoInfo("La Anunciación del Señor", "Fiesta de la Encarnación"));
 
         // Abril
-        SANTORAL_MAP.put("04-23", new SantoInfo("San Jorge", "Patrono Mundial de los Scouts y Halcones", "Patrono Mundial de los Scouts"));
         SANTORAL_MAP.put("04-29", new SantoInfo("Santa Catalina de Siena", "Doctora de la Iglesia"));
 
         // Mayo
@@ -61,20 +58,18 @@ public class SantoralUtils {
 
         // Junio
         SANTORAL_MAP.put("06-13", new SantoInfo("San Antonio de Padua", "Doctor de la Iglesia"));
-        SANTORAL_MAP.put("06-24", new SantoInfo("San Juan Bautista", "Precursor del Señor"));
-        SANTORAL_MAP.put("06-29", new SantoInfo("San Pedro y San Pablo", "Columnas de la Iglesia"));
+        SANTORAL_MAP.put("06-24", new SantoInfo("San Juan Bautista", "Patrono de la brigada Leñadores", null));
+        SANTORAL_MAP.put("06-29", new SantoInfo("San Pedro y San Pablo", "San Pablo: Patrono de la brigada Pioneros", null));
 
         // Julio
         SANTORAL_MAP.put("07-16", new SantoInfo("Nuestra Señora del Carmen", "Patrona y Madre"));
-        SANTORAL_MAP.put("07-25", new SantoInfo("Santiago el Mayor", "Apóstol y Guía"));
         SANTORAL_MAP.put("07-31", new SantoInfo("San Ignacio de Loyola", "Fundador de la Compañía de Jesús"));
 
         // Agosto
-        SANTORAL_MAP.put("08-08", new SantoInfo("Santo Domingo de Guzmán", "Fundador de la Orden de Predicadores"));
         SANTORAL_MAP.put("08-15", new SantoInfo("La Asunción de la Virgen María", "Fiesta de la Asunción"));
-        SANTORAL_MAP.put("08-30", new SantoInfo("Santa Rosa de Lima", "Patrona de América"));
 
         // Septiembre
+        SANTORAL_MAP.put("09-07", new SantoInfo("Aniversario del Pucará Puntano", "Aniversario de nuestra Agrupación"));
         SANTORAL_MAP.put("09-08", new SantoInfo("Natividad de la Santísima Virgen María", "Fiesta Mariana"));
         SANTORAL_MAP.put("09-24", new SantoInfo("Nuestra Señora de la Merced", "Patrona de los Cautivos"));
         SANTORAL_MAP.put("09-29", new SantoInfo("San Miguel Arcángel", "Patrono de la brigada Halcones", null));
@@ -83,7 +78,6 @@ public class SantoralUtils {
         SANTORAL_MAP.put("10-01", new SantoInfo("Santa Teresita del Niño Jesús", "Patrona de las Misiones"));
         SANTORAL_MAP.put("10-04", new SantoInfo("San Francisco de Asís", "Ejemplo de Humildad y Hermandad"));
         SANTORAL_MAP.put("10-12", new SantoInfo("Nuestra Señora del Pilar", "Virgen de la Hispanidad"));
-        SANTORAL_MAP.put("10-22", new SantoInfo("San Juan Pablo II", "El Papa de los Jóvenes"));
 
         // Noviembre
         SANTORAL_MAP.put("11-01", new SantoInfo("Día de Todos los Santos", "Solemnidad de Todos los Santos"));
